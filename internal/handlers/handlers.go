@@ -45,3 +45,13 @@ func (h *ServiceHandler) GetSMSData(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println("Данные [][]SMSData переданы:")
 }
+
+func (h *ServiceHandler) GetMMSData(w http.ResponseWriter, r *http.Request) {
+	err := json.NewEncoder(w).Encode(h.Data.GetMMS())
+	if err != nil {
+		http.Error(w, "Internal error", http.StatusInternalServerError)
+		log.Println("Internal error")
+		return
+	}
+	log.Println("Данные [][]MMSData переданы:")
+}

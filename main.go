@@ -24,6 +24,7 @@ func handleConnection() chi.Router {
 	})
 	h := &handlers.ServiceHandler{Data: service.NewService()}
 	r.Mount("/api", MountRoute(h))
+	r.Mount("/service", MountRouteServices(h))
 	r.Mount("/test", MountRouteTests(h))
 	return r
 }
@@ -35,10 +36,16 @@ func MountRoute(h *handlers.ServiceHandler) chi.Router {
 	return r
 }
 
+func MountRouteServices(h *handlers.ServiceHandler) chi.Router {
+	r := chi.NewRouter()
+	r.Get("/SMS", h.GetSMSData) // GET /service/SMS
+	r.Get("/MMS", h.GetMMSData) // GET /service/MMS
+	return r
+}
+
 func MountRouteTests(h *handlers.ServiceHandler) chi.Router {
 	r := chi.NewRouter()
 	r.Get("/", h.GetData)                     // GET /test
 	r.Get("/ResultSetT", h.GetResultSetTData) // GET /test/ResultSetT
-	r.Get("/SMS", h.GetSMSData)               // GET /test/SMS
 	return r
 }

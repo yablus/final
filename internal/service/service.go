@@ -77,6 +77,7 @@ type DataService interface {
 	GetResultData() models.ResultT
 	GetResultSetT() models.ResultSetT
 	GetSMS() [][]models.SMSData
+	GetMMS() [][]models.MMSData
 }
 
 type Data struct {
@@ -131,4 +132,8 @@ func (u *Data) GetResultSetT() models.ResultSetT {
 
 func (u *Data) GetSMS() [][]models.SMSData {
 	return u.SMS
+}
+
+func (u *Data) GetMMS() [][]models.MMSData {
+	return u.MMS
 }
