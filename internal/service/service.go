@@ -7,6 +7,7 @@ import (
 	"github.com/yablus/final/internal/models"
 	"github.com/yablus/final/internal/service/mms"
 	"github.com/yablus/final/internal/service/sms"
+	"github.com/yablus/final/internal/service/voice"
 	"github.com/yablus/final/test"
 )
 
@@ -78,6 +79,7 @@ type DataService interface {
 	GetResultSetT() models.ResultSetT
 	GetSMS() [][]models.SMSData
 	GetMMS() [][]models.MMSData
+	GetVoice() []models.VoiceCallData
 }
 
 type Data struct {
@@ -96,7 +98,8 @@ func NewService() *Data {
 		//SMS:      marshSMS(test.TestResponseSMS),
 		MMS: mms.GetMMSData(),
 		//MMS:      marshMMS(test.TestResponseMMS),
-		Voice:    marshVC(test.TestResponseVoiceCall),
+		Voice: voice.GetVoiceData(),
+		//Voice:    marshVC(test.TestResponseVoiceCall),
 		Email:    marshEmail(test.TestResponseEmail),
 		Billing:  marshBil(test.TestResponseBilling),
 		Support:  marshS(test.TestResponseSupport),
@@ -136,4 +139,8 @@ func (u *Data) GetSMS() [][]models.SMSData {
 
 func (u *Data) GetMMS() [][]models.MMSData {
 	return u.MMS
+}
+
+func (u *Data) GetVoice() []models.VoiceCallData {
+	return u.Voice
 }

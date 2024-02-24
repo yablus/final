@@ -121,7 +121,7 @@ func IsValidSMSData(data models.SMSData, str string) bool {
 		log.Printf("Элемент [%s] удален: Некорректное значение времени ответа (%sms)\n", str, data.ResponseTime)
 		return false
 	}
-	if !SliceContainsString(GetAllProvidersFromFile("providers.data"), data.Provider) {
+	if !SliceContainsString(GetAllProvidersFromFile("mobile_providers.data"), data.Provider) {
 		log.Printf("Элемент [%s] удален: Провайдер %s отсутствует в базе провайдеров\n", str, data.Provider)
 		return false
 	}
@@ -143,8 +143,30 @@ func IsValidMMSData(data models.MMSData) bool {
 		log.Printf("Элемент %s удален: Некорректное значение времени ответа (%sms)\n", data, data.ResponseTime)
 		return false
 	}
-	if !SliceContainsString(GetAllProvidersFromFile("providers.data"), data.Provider) {
+	if !SliceContainsString(GetAllProvidersFromFile("mobile_providers.data"), data.Provider) {
 		log.Printf("Элемент %s удален: Провайдер %s отсутствует в базе провайдеров\n", data, data.Provider)
+		return false
+	}
+	return true
+}
+
+func IsValidVoiceData(data models.VoiceCallData, str string) bool {
+	if !SliceContainsString(GetAllCountryCodes(), data.Country) {
+		log.Printf("Элемент [%s] удален: Код страны %s отсутствует в базе iso3166-1\n", str, data.Country)
+		return false
+	}
+	bandwidthInt, err := strconv.Atoi(data.Bandwidth)
+	if err != nil || bandwidthInt < 0 || bandwidthInt > 100 {
+		log.Printf("Элемент [%s] удален: Некорректное значение пропускной способности канала (%s)\n", str, data.Bandwidth)
+		return false
+	}
+	_, err = strconv.Atoi(data.ResponseTime)
+	if err != nil {
+		log.Printf("Элемент [%s] удален: Некорректное значение времени ответа (%sms)\n", str, data.ResponseTime)
+		return false
+	}
+	if !SliceContainsString(GetAllProvidersFromFile("voice_providers.data"), data.Provider) {
+		log.Printf("Элемент [%s] удален: Провайдер %s отсутствует в базе провайдеров\n", str, data.Provider)
 		return false
 	}
 	return true
