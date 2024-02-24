@@ -77,7 +77,7 @@ func formatMMSData(data []models.MMSData) [][]models.MMSData {
 	}
 	iso3166data := functions.GetAllCountriesFromFile("iso3166-1_alpha-2.data")
 	if iso3166data == nil {
-		log.Println("Services - MMS - formatMMSData:", "Formatting error: empty data")
+		log.Println("Services - MMS - formatMMSData:", "Formatting error: empty iso3166data")
 		return nil
 	}
 	for i := 0; i < len(data); i++ {
