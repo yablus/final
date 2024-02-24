@@ -3,6 +3,7 @@ package functions
 import (
 	"io"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -20,6 +21,24 @@ const (
 type Iso3166 struct {
 	Code    string
 	Country string
+}
+
+func GetDataFromURL(url string) ([]byte, int) {
+	r, err := http.Get(url)
+	if err != nil {
+		log.Println("Functions - GetDataFromURL:", err)
+		return nil, 404
+	}
+	defer r.Body.Close()
+	if r.StatusCode == 200 { // OK
+		buf, err := io.ReadAll(r.Body)
+		if err != nil {
+			log.Println("Functions - GetDataFromURL:", err)
+			return nil, 404
+		}
+		return buf, 200
+	}
+	return nil, r.StatusCode
 }
 
 func GetDataFromFile(path string) []byte {
@@ -87,23 +106,45 @@ func SliceContainsString(slice []string, str string) bool {
 
 //----------------------
 
-func IsValidSMSDataStruct(data models.SMSData, str string) bool {
+func IsValidSMSData(data models.SMSData, str string) bool {
 	if !SliceContainsString(GetAllCountryCodes(), data.Country) {
-		log.Printf("Строка [%s] удалена: Код страны %s отсутствует в базе iso3166-1\n", str, data.Country)
+		log.Printf("Элемент [%s] удален: Код страны %s отсутствует в базе iso3166-1\n", str, data.Country)
 		return false
 	}
 	bandwidthInt, err := strconv.Atoi(data.Bandwidth)
 	if err != nil || bandwidthInt < 0 || bandwidthInt > 100 {
-		log.Printf("Строка [%s] удалена: Некорректное значение пропускной способности канала (%s)\n", str, data.Bandwidth)
+		log.Printf("Элемент [%s] удален: Некорректное значение пропускной способности канала (%s)\n", str, data.Bandwidth)
 		return false
 	}
 	_, err = strconv.Atoi(data.ResponseTime)
 	if err != nil {
-		log.Printf("Строка [%s] удалена: Некорректное значение времени ответа (%sms)\n", str, data.ResponseTime)
+		log.Printf("Элемент [%s] удален: Некорректное значение времени ответа (%sms)\n", str, data.ResponseTime)
 		return false
 	}
 	if !SliceContainsString(GetAllProvidersFromFile("providers.data"), data.Provider) {
-		log.Printf("Строка [%s] удалена: Провайдер %s отсутствует в базе провайдеров\n", str, data.Provider)
+		log.Printf("Элемент [%s] удален: Провайдер %s отсутствует в базе провайдеров\n", str, data.Provider)
+		return false
+	}
+	return true
+}
+
+func IsValidMMSData(data models.MMSData) bool {
+	if !SliceContainsString(GetAllCountryCodes(), data.Country) {
+		log.Printf("Элемент %s удален: Код страны %s отсутствует в базе iso3166-1\n", data, data.Country)
+		return false
+	}
+	bandwidthInt, err := strconv.Atoi(data.Bandwidth)
+	if err != nil || bandwidthInt < 0 || bandwidthInt > 100 {
+		log.Printf("Элемент %s удален: Некорректное значение пропускной способности канала (%s)\n", data, data.Bandwidth)
+		return false
+	}
+	_, err = strconv.Atoi(data.ResponseTime)
+	if err != nil {
+		log.Printf("Элемент %s удален: Некорректное значение времени ответа (%sms)\n", data, data.ResponseTime)
+		return false
+	}
+	if !SliceContainsString(GetAllProvidersFromFile("providers.data"), data.Provider) {
+		log.Printf("Элемент %s удален: Провайдер %s отсутствует в базе провайдеров\n", data, data.Provider)
 		return false
 	}
 	return true

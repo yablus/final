@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/yablus/final/internal/models"
+	"github.com/yablus/final/internal/service/mms"
 	"github.com/yablus/final/internal/service/sms"
 	"github.com/yablus/final/test"
 )
@@ -13,7 +14,7 @@ func marshSMS(b []byte) [][]models.SMSData {
 	var data [][]models.SMSData
 	err := json.Unmarshal(b, &data)
 	if err != nil {
-		log.Fatalln("marshSMS:", err)
+		log.Fatalln("Service - marshSMS:", err)
 	}
 	return data
 }
@@ -22,7 +23,7 @@ func marshMMS(b []byte) [][]models.MMSData {
 	var data [][]models.MMSData
 	err := json.Unmarshal(b, &data)
 	if err != nil {
-		log.Fatalln("marshMMS:", err)
+		log.Fatalln("Service - marshMMS:", err)
 	}
 	return data
 }
@@ -31,7 +32,7 @@ func marshVC(b []byte) []models.VoiceCallData {
 	var data []models.VoiceCallData
 	err := json.Unmarshal(b, &data)
 	if err != nil {
-		log.Fatalln("marshVC:", err)
+		log.Fatalln("Service - marshVC:", err)
 	}
 	return data
 }
@@ -40,7 +41,7 @@ func marshEmail(b []byte) map[string][][]models.EmailData {
 	var data map[string][][]models.EmailData
 	err := json.Unmarshal(b, &data)
 	if err != nil {
-		log.Fatalln("marshEmail:", err)
+		log.Fatalln("Service - marshEmail:", err)
 	}
 	return data
 }
@@ -49,7 +50,7 @@ func marshBil(b []byte) models.BillingData {
 	var data models.BillingData
 	err := json.Unmarshal(b, &data)
 	if err != nil {
-		log.Fatalln("marshBil:", err)
+		log.Fatalln("Service - marshBil:", err)
 	}
 	return data
 }
@@ -58,7 +59,7 @@ func marshS(b []byte) []int {
 	var data []int
 	err := json.Unmarshal(b, &data)
 	if err != nil {
-		log.Fatalln("marshS:", err)
+		log.Fatalln("Service - marshS:", err)
 	}
 	return data
 }
@@ -67,7 +68,7 @@ func marshIn(b []byte) []models.IncidentData {
 	var data []models.IncidentData
 	err := json.Unmarshal(b, &data)
 	if err != nil {
-		log.Fatalln("marshIn:", err)
+		log.Fatalln("Service - marshIn:", err)
 	}
 	return data
 }
@@ -92,7 +93,8 @@ func NewService() *Data {
 	return &Data{
 		SMS: sms.GetSMSData(),
 		//SMS:      marshSMS(test.TestResponseSMS),
-		MMS:      marshMMS(test.TestResponseMMS),
+		MMS: mms.GetMMSData(),
+		//MMS:      marshMMS(test.TestResponseMMS),
 		Voice:    marshVC(test.TestResponseVoiceCall),
 		Email:    marshEmail(test.TestResponseEmail),
 		Billing:  marshBil(test.TestResponseBilling),
@@ -104,7 +106,7 @@ func NewService() *Data {
 func (u *Data) GetResultData() models.ResultT {
 	var result models.ResultT
 	//Проверить все поля
-	if u.SMS != nil {
+	if u.SMS != nil && u.MMS != nil && u.Voice != nil && u.Email != nil && u.Support != nil && u.Incident != nil {
 		result.Status = true
 		result.Data = u.GetResultSetT()
 	} else {
