@@ -19,26 +19,27 @@ const (
 
 var fileSMSDataName = config.FileSMSDataName
 
-func makeSmsData() []models.SMSData {
+func makeSMSData() []models.SMSData {
 	fmt.Println("================")
 	log.Println("Запущен сервис SMS")
 
 	var fileSMSData = dataPath + fileSMSDataName
 	bufSMSData := functions.GetDataFromFile(fileSMSData)
 	if bufSMSData == nil {
-		log.Fatalln("Services - SMS:", "Getting error: empty data")
+		log.Println("Services - SMS:", "Getting error: empty data")
+		return nil
 	}
-	log.Printf("Файл [%s] прочитан\n", fileSMSDataName)
+	log.Printf("Файл %s прочитан\n", fileSMSDataName)
 
 	sep := "\n"
 	slice := strings.Split(strings.Trim(string(bufSMSData), sep), sep)
-	log.Printf("Данные SMS сервиса получены: Всего: %d строк\n", len(slice))
+	log.Printf("Данные SMS сервиса получены: Всего: %d элементов\n", len(slice))
 
 	data := make([]models.SMSData, 0)
 	for _, value := range slice {
 		values := strings.Split(value, ";")
 		if len(values) != 4 {
-			log.Printf("Строка [%s] удалена: Некорректное количество параметров (%d)\n", value, len(values))
+			log.Printf("Элемент [%s] удален: Некорректное количество параметров (%d)\n", value, len(values))
 			continue
 		}
 		dataStruct := models.SMSData{
@@ -47,13 +48,13 @@ func makeSmsData() []models.SMSData {
 			ResponseTime: values[2],
 			Provider:     values[3],
 		}
-		if !functions.IsValidSMSDataStruct(dataStruct, value) {
+		if !functions.IsValidSMSData(dataStruct, value) {
 			continue
 		}
 		data = append(data, dataStruct)
 	}
 	if len(slice) != len(data) {
-		log.Printf("Данные SMS сервиса откорректированы: Всего: %d строк\n", len(data))
+		log.Printf("Данные SMS сервиса изменены: Всего: %d элементов\n", len(data))
 	}
 
 	if showData {
@@ -62,7 +63,7 @@ func makeSmsData() []models.SMSData {
 			log.Println("Services - SMS:", err)
 			return nil
 		}
-		log.Println("Исправленный дамп данных SMS сервиса (в JSON):")
+		log.Println("Исправленные данные SMS сервиса (в JSON):")
 		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
 		fmt.Println("----------------")
@@ -107,7 +108,7 @@ func formatSMSData(data []models.SMSData) [][]models.SMSData {
 			log.Println("Services - SMS - formatSMSData:", err)
 			return nil
 		}
-		log.Println("Корректный дамп данных SMS сервиса (в JSON):")
+		log.Println("Корректные данные SMS сервиса (в JSON):")
 		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
 		fmt.Println("----------------")
@@ -117,5 +118,5 @@ func formatSMSData(data []models.SMSData) [][]models.SMSData {
 }
 
 func GetSMSData() [][]models.SMSData {
-	return formatSMSData(makeSmsData())
+	return formatSMSData(makeSMSData())
 }
