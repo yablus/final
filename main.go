@@ -38,10 +38,11 @@ func MountRoute(h *handlers.ServiceHandler) chi.Router {
 
 func MountRouteServices(h *handlers.ServiceHandler) chi.Router {
 	r := chi.NewRouter()
-	r.Get("/sms", h.GetSMSData)     // GET /service/sms
-	r.Get("/mms", h.GetMMSData)     // GET /service/mms
-	r.Get("/voice", h.GetVoiceData) // GET /service/voice
-	r.Get("/email", h.GetEmailData) // GET /service/email
+	r.Get("/sms", h.GetSMSData)         // GET /service/sms
+	r.Get("/mms", h.GetMMSData)         // GET /service/mms
+	r.Get("/voice", h.GetVoiceData)     // GET /service/voice
+	r.Get("/email", h.GetEmailData)     // GET /service/email
+	r.Get("/billing", h.GetBillingData) // GET /service/billing
 	return r
 }
 

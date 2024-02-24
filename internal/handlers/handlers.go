@@ -64,6 +64,16 @@ func (h *ServiceHandler) GetEmailData(w http.ResponseWriter, r *http.Request) {
 	log.Println("Данные map[string][][]models.EmailData переданы:")
 }
 
+func (h *ServiceHandler) GetBillingData(w http.ResponseWriter, r *http.Request) {
+	err := json.NewEncoder(w).Encode(h.Data.GetBilling())
+	if err != nil {
+		http.Error(w, "Internal error", http.StatusInternalServerError)
+		log.Println("Internal error")
+		return
+	}
+	log.Println("Данные BillingData переданы:")
+}
+
 // Для тестирования:
 
 func (h *ServiceHandler) GetResultSetTData(w http.ResponseWriter, r *http.Request) {
