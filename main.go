@@ -32,14 +32,16 @@ func handleConnection() chi.Router {
 func MountRoute(h *handlers.ServiceHandler) chi.Router {
 	r := chi.NewRouter()
 	r.Get("/", h.GetData) // GET /api
-	//r.Get("/", test.HandleTest) // GET /api *для тестирования веб-сервиса
+	//r.Get("/", test.HandleTest) // GET /api *для тестирования в веб-сервисе
 	return r
 }
 
 func MountRouteServices(h *handlers.ServiceHandler) chi.Router {
 	r := chi.NewRouter()
-	r.Get("/SMS", h.GetSMSData) // GET /service/SMS
-	r.Get("/MMS", h.GetMMSData) // GET /service/MMS
+	r.Get("/sms", h.GetSMSData)     // GET /service/sms
+	r.Get("/mms", h.GetMMSData)     // GET /service/mms
+	r.Get("/voice", h.GetVoiceData) // GET /service/voice
+	r.Get("/email", h.GetEmailData) // GET /service/email
 	return r
 }
 

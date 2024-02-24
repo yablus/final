@@ -24,18 +24,6 @@ func (h *ServiceHandler) GetData(w http.ResponseWriter, r *http.Request) {
 	log.Println("Данные переданы:")
 }
 
-// Для тестирования:
-
-func (h *ServiceHandler) GetResultSetTData(w http.ResponseWriter, r *http.Request) {
-	err := json.NewEncoder(w).Encode(h.Data.GetResultSetT())
-	if err != nil {
-		http.Error(w, "Internal error", http.StatusInternalServerError)
-		log.Println("Internal error")
-		return
-	}
-	log.Println("Данные ResultSetT переданы:")
-}
-
 func (h *ServiceHandler) GetSMSData(w http.ResponseWriter, r *http.Request) {
 	err := json.NewEncoder(w).Encode(h.Data.GetSMS())
 	if err != nil {
@@ -64,4 +52,26 @@ func (h *ServiceHandler) GetVoiceData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println("Данные []VoiceCallData переданы:")
+}
+
+func (h *ServiceHandler) GetEmailData(w http.ResponseWriter, r *http.Request) {
+	err := json.NewEncoder(w).Encode(h.Data.GetEmail())
+	if err != nil {
+		http.Error(w, "Internal error", http.StatusInternalServerError)
+		log.Println("Internal error")
+		return
+	}
+	log.Println("Данные map[string][][]models.EmailData переданы:")
+}
+
+// Для тестирования:
+
+func (h *ServiceHandler) GetResultSetTData(w http.ResponseWriter, r *http.Request) {
+	err := json.NewEncoder(w).Encode(h.Data.GetResultSetT())
+	if err != nil {
+		http.Error(w, "Internal error", http.StatusInternalServerError)
+		log.Println("Internal error")
+		return
+	}
+	log.Println("Данные ResultSetT переданы:")
 }

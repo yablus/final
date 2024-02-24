@@ -171,3 +171,15 @@ func IsValidVoiceData(data models.VoiceCallData, str string) bool {
 	}
 	return true
 }
+
+func IsValidEmailData(data models.EmailData, str string) bool {
+	if !SliceContainsString(GetAllCountryCodes(), data.Country) {
+		log.Printf("Элемент [%s] удален: Код страны %s отсутствует в базе iso3166-1\n", str, data.Country)
+		return false
+	}
+	if !SliceContainsString(GetAllProvidersFromFile("email_providers.data"), data.Provider) {
+		log.Printf("Элемент [%s] удален: Провайдер %s отсутствует в базе провайдеров\n", str, data.Provider)
+		return false
+	}
+	return true
+}
