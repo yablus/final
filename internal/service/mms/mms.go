@@ -43,7 +43,7 @@ func makeMMSData() []models.MMSData {
 		if count != 4 {
 			dataCorrected = true
 			data = append(data[:i], data[i+1:]...)
-			log.Printf("Элемент %s удален: Некорректное количество параметров (%d)\n", v, count)
+			log.Printf("Элемент %v удален: Некорректное количество параметров (%d)\n", v, count)
 			continue
 		}
 		if !functions.IsValidMMSData(v) {
