@@ -30,7 +30,7 @@ func handleConnection() chi.Router {
 	})
 	h := &handlers.ServiceHandler{Data: service.NewService()}
 	r.Mount("/api", MountRoute(h))
-	r.Mount("/test", MountRouteTests(h))
+	//r.Mount("/test", MountRouteTests(h))
 	return r
 }
 
