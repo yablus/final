@@ -1,81 +1,15 @@
 package service
 
 import (
-	"encoding/json"
-	"log"
-
 	"github.com/yablus/final/internal/models"
 	"github.com/yablus/final/internal/usecase/service/billing"
 	"github.com/yablus/final/internal/usecase/service/email"
+	"github.com/yablus/final/internal/usecase/service/incident"
 	"github.com/yablus/final/internal/usecase/service/mms"
 	"github.com/yablus/final/internal/usecase/service/sms"
 	"github.com/yablus/final/internal/usecase/service/support"
 	"github.com/yablus/final/internal/usecase/service/voice"
-	"github.com/yablus/final/test"
 )
-
-func marshSMS(b []byte) [][]models.SMSData {
-	var data [][]models.SMSData
-	err := json.Unmarshal(b, &data)
-	if err != nil {
-		log.Fatalln("Service - marshSMS:", err)
-	}
-	return data
-}
-
-func marshMMS(b []byte) [][]models.MMSData {
-	var data [][]models.MMSData
-	err := json.Unmarshal(b, &data)
-	if err != nil {
-		log.Fatalln("Service - marshMMS:", err)
-	}
-	return data
-}
-
-func marshVC(b []byte) []models.VoiceCallData {
-	var data []models.VoiceCallData
-	err := json.Unmarshal(b, &data)
-	if err != nil {
-		log.Fatalln("Service - marshVC:", err)
-	}
-	return data
-}
-
-func marshEmail(b []byte) map[string][][]models.EmailData {
-	var data map[string][][]models.EmailData
-	err := json.Unmarshal(b, &data)
-	if err != nil {
-		log.Fatalln("Service - marshEmail:", err)
-	}
-	return data
-}
-
-func marshBil(b []byte) models.BillingData {
-	var data models.BillingData
-	err := json.Unmarshal(b, &data)
-	if err != nil {
-		log.Fatalln("Service - marshBil:", err)
-	}
-	return data
-}
-
-func marshS(b []byte) []int {
-	var data []int
-	err := json.Unmarshal(b, &data)
-	if err != nil {
-		log.Fatalln("Service - marshS:", err)
-	}
-	return data
-}
-
-func marshIn(b []byte) []models.IncidentData {
-	var data []models.IncidentData
-	err := json.Unmarshal(b, &data)
-	if err != nil {
-		log.Fatalln("Service - marshIn:", err)
-	}
-	return data
-}
 
 type DataService interface {
 	GetResultData() models.ResultT
@@ -86,6 +20,7 @@ type DataService interface {
 	GetEmail() map[string][][]models.EmailData
 	GetBilling() models.BillingData
 	GetSupport() []int
+	GetIncident() []models.IncidentData
 }
 
 type Data struct {
@@ -100,19 +35,13 @@ type Data struct {
 
 func NewService() *Data {
 	return &Data{
-		SMS: sms.GetSMSData(),
-		//SMS:      marshSMS(test.TestResponseSMS),
-		MMS: mms.GetMMSData(),
-		//MMS:      marshMMS(test.TestResponseMMS),
-		Voice: voice.GetVoiceData(),
-		//Voice:    marshVC(test.TestResponseVoiceCall),
-		Email: email.GetEmailData(),
-		//Email:    marshEmail(test.TestResponseEmail),
-		Billing: billing.GetBillingData(),
-		//Billing:  marshBil(test.TestResponseBilling),
-		Support: support.GetSupportData(),
-		//Support:  marshS(test.TestResponseSupport),
-		Incident: marshIn(test.TestResponseIncident),
+		SMS:      sms.GetSMSData(),
+		MMS:      mms.GetMMSData(),
+		Voice:    voice.GetVoiceData(),
+		Email:    email.GetEmailData(),
+		Billing:  billing.GetBillingData(),
+		Support:  support.GetSupportData(),
+		Incident: incident.GetIncidentData(),
 	}
 }
 
@@ -163,4 +92,8 @@ func (u *Data) GetBilling() models.BillingData {
 
 func (u *Data) GetSupport() []int {
 	return u.Support
+}
+
+func (u *Data) GetIncident() []models.IncidentData {
+	return u.Incident
 }

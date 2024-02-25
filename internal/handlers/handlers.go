@@ -84,7 +84,17 @@ func (h *ServiceHandler) GetSupportData(w http.ResponseWriter, r *http.Request) 
 	log.Println("Данные []int переданы:")
 }
 
-// Для тестирования:
+func (h *ServiceHandler) GetIncidentData(w http.ResponseWriter, r *http.Request) {
+	err := json.NewEncoder(w).Encode(h.Data.GetIncident())
+	if err != nil {
+		http.Error(w, "Internal error", http.StatusInternalServerError)
+		log.Println("Internal error")
+		return
+	}
+	log.Println("Данные []IncidentData переданы:")
+}
+
+// --------------- Для тестирования:
 
 func (h *ServiceHandler) GetResultSetTData(w http.ResponseWriter, r *http.Request) {
 	err := json.NewEncoder(w).Encode(h.Data.GetResultSetT())
