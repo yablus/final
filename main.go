@@ -50,7 +50,7 @@ func main() {
 	time.Sleep(2 * time.Second)
 
 	c := handleConnection()
-	log.Println("Api доступен по GET запросу на http://127.0.0.1:8282/api")
+	log.Println("Api доступен: http://127.0.0.1:8282/api")
 	fmt.Println("----------------------------")
 	http.ListenAndServe(":8282", c)
 }
@@ -77,6 +77,7 @@ func MountRoute(h *handlers.ServiceHandler) chi.Router {
 	r.Get("/voice", h.GetVoiceData)     // GET /api/voice
 	r.Get("/email", h.GetEmailData)     // GET /api/email
 	r.Get("/billing", h.GetBillingData) // GET /api/billing
+	r.Get("/support", h.GetSupportData) // GET /api/billing
 	return r
 }
 

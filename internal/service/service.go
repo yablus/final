@@ -9,6 +9,7 @@ import (
 	"github.com/yablus/final/internal/service/email"
 	"github.com/yablus/final/internal/service/mms"
 	"github.com/yablus/final/internal/service/sms"
+	"github.com/yablus/final/internal/service/support"
 	"github.com/yablus/final/internal/service/voice"
 	"github.com/yablus/final/test"
 )
@@ -84,6 +85,7 @@ type DataService interface {
 	GetVoice() []models.VoiceCallData
 	GetEmail() map[string][][]models.EmailData
 	GetBilling() models.BillingData
+	GetSupport() []int
 }
 
 type Data struct {
@@ -108,8 +110,8 @@ func NewService() *Data {
 		//Email:    marshEmail(test.TestResponseEmail),
 		Billing: billing.GetBillingData(),
 		//Billing:  marshBil(test.TestResponseBilling),
-		//Support: nil, //[]int{},
-		Support:  marshS(test.TestResponseSupport),
+		Support: support.GetSupportData(),
+		//Support:  marshS(test.TestResponseSupport),
 		Incident: marshIn(test.TestResponseIncident),
 	}
 }
@@ -157,4 +159,8 @@ func (u *Data) GetEmail() map[string][][]models.EmailData {
 
 func (u *Data) GetBilling() models.BillingData {
 	return u.Billing
+}
+
+func (u *Data) GetSupport() []int {
+	return u.Support
 }
