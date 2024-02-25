@@ -8,18 +8,17 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/yablus/final/config"
+	"github.com/yablus/final/internal/config"
 	"github.com/yablus/final/internal/functions"
 	"github.com/yablus/final/internal/models"
 )
 
-const (
-	dataPath      = config.DataPath
-	showData      = config.ShowDataInLogs
-	showFinalData = config.ShowFinalDataInLogs
+var (
+	showData          = config.B("b_showDataInLogs")
+	showFinalData     = config.B("b_showFinalDataInLogs")
+	fileEmailDataName = config.S("df_fileEmailDataName")
+	dataPath          = config.S("p_dataPath")
 )
-
-var fileEmailDataName = config.FileEmailDataName
 
 func makeEmailData() []models.EmailData {
 	log.Println("Запущен сервис Email")

@@ -8,17 +8,16 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/yablus/final/config"
+	"github.com/yablus/final/internal/config"
 	"github.com/yablus/final/internal/functions"
 	"github.com/yablus/final/internal/models"
 )
 
-const (
-	showData      = config.ShowDataInLogs
-	showFinalData = config.ShowFinalDataInLogs
+var (
+	showData      = config.B("b_showDataInLogs")
+	showFinalData = config.B("b_showFinalDataInLogs")
+	urlMMSData    = config.S("du_urlMMSDataPath")
 )
-
-var urlMMSData = config.URLMMSDataPath
 
 func makeMMSData() []models.MMSData {
 	log.Println("Запущен сервис MMS")

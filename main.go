@@ -11,12 +11,13 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/yablus/final/config"
 	"github.com/yablus/final/internal/handlers"
 	"github.com/yablus/final/internal/service"
 )
 
 var clear map[string]func()
+
+const clearConsole = false
 
 func init() {
 	clear = make(map[string]func())
@@ -33,7 +34,7 @@ func init() {
 }
 
 func main() {
-	if config.ClearConsole {
+	if clearConsole {
 		value, ok := clear[runtime.GOOS]
 		if ok {
 			value()

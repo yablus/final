@@ -8,15 +8,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/yablus/final/config"
+	"github.com/yablus/final/internal/config"
 	"github.com/yablus/final/internal/models"
 )
 
-const (
-	filesPath = config.FilesPath
-)
-
-//----------------------
+var filesPath = config.S("p_filesPath")
 
 type Iso3166 struct {
 	Code    string

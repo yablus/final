@@ -7,17 +7,16 @@ import (
 	"math"
 	"strings"
 
-	"github.com/yablus/final/config"
+	"github.com/yablus/final/internal/config"
 	"github.com/yablus/final/internal/functions"
 	"github.com/yablus/final/internal/models"
 )
 
-const (
-	dataPath      = config.DataPath
-	showFinalData = config.ShowFinalDataInLogs
+var (
+	showFinalData       = config.B("b_showFinalDataInLogs")
+	fileBillingDataName = config.S("df_fileBillingDataName")
+	dataPath            = config.S("p_dataPath")
 )
-
-var fileBillingDataName = config.FileBillingDataName
 
 func makeBillingData() models.BillingData {
 	log.Println("Запущен сервис Billing")

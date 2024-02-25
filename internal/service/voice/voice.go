@@ -8,18 +8,17 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/yablus/final/config"
+	"github.com/yablus/final/internal/config"
 	"github.com/yablus/final/internal/functions"
 	"github.com/yablus/final/internal/models"
 )
 
-const (
-	dataPath      = config.DataPath
-	showData      = config.ShowDataInLogs
-	showFinalData = config.ShowFinalDataInLogs
+var (
+	showData          = config.B("b_showDataInLogs")
+	showFinalData     = config.B("b_showFinalDataInLogs")
+	fileVoiceDataName = config.S("df_fileVoiceDataName")
+	dataPath          = config.S("p_dataPath")
 )
-
-var fileVoiceDataName = config.FileVoiceDataName
 
 func makeVoiceData() []models.VoiceCallData {
 	log.Println("Запущен сервис VoiceCall")
