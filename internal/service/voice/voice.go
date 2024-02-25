@@ -98,11 +98,13 @@ func makeVoiceData() []models.VoiceCallData {
 func formatVoiceData(data []models.VoiceCallData) []models.VoiceCallData {
 	if data == nil {
 		log.Println("Services - VoiceCall - formatVoiceData:", "Formatting error: empty data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 	iso3166data := functions.GetAllCountriesFromFile("iso3166-1_alpha-2.data")
 	if iso3166data == nil {
 		log.Println("Services - VoiceCall - formatVoiceData:", "Formatting error: empty iso3166data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 	for i := 0; i < len(data); i++ {
@@ -121,6 +123,7 @@ func formatVoiceData(data []models.VoiceCallData) []models.VoiceCallData {
 		jsonOut, err := json.Marshal(data)
 		if err != nil {
 			log.Println("Services - VoiceCall - formatVoiceData:", err)
+			fmt.Println("----------------------------")
 			return nil
 		}
 		log.Println("Корректные данные VoiceCall сервиса (в JSON):")

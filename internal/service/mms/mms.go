@@ -73,11 +73,13 @@ func makeMMSData() []models.MMSData {
 func formatMMSData(data []models.MMSData) [][]models.MMSData {
 	if data == nil {
 		log.Println("Services - MMS - formatMMSData:", "Formatting error: empty data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 	iso3166data := functions.GetAllCountriesFromFile("iso3166-1_alpha-2.data")
 	if iso3166data == nil {
 		log.Println("Services - MMS - formatMMSData:", "Formatting error: empty iso3166data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 	for i := 0; i < len(data); i++ {
@@ -104,6 +106,7 @@ func formatMMSData(data []models.MMSData) [][]models.MMSData {
 		jsonOut, err := json.Marshal(out)
 		if err != nil {
 			log.Println("Services - MMS - formatMMSData:", err)
+			fmt.Println("----------------------------")
 			return nil
 		}
 		log.Println("Корректные данные MMS сервиса (в JSON):")

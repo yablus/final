@@ -25,6 +25,7 @@ func makeBillingData() models.BillingData {
 	bufBillingData := functions.GetDataFromFile(fileBillingData)
 	if bufBillingData == nil {
 		log.Println("Services - Billing:", "Getting error: empty data")
+		fmt.Println("----------------------------")
 		return models.BillingData{}
 	}
 	log.Printf("Файл %s прочитан\n", fileBillingDataName)
@@ -71,6 +72,7 @@ func makeBillingData() models.BillingData {
 		jsonOut, err := json.Marshal(data)
 		if err != nil {
 			log.Println("Services - Billing:", err)
+			fmt.Println("----------------------------")
 			return models.BillingData{}
 		}
 		log.Println("Данные Billing сервиса (в JSON):")

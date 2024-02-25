@@ -78,11 +78,13 @@ func makeEmailData() []models.EmailData {
 func formatEmailData(data []models.EmailData) map[string][][]models.EmailData {
 	if data == nil {
 		log.Println("Services - Email - formatEmailData:", "Formatting error: empty data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 	iso3166data := functions.GetAllCountriesFromFile("iso3166-1_alpha-2.data")
 	if iso3166data == nil {
 		log.Println("Services - Email - formatEmailData:", "Formatting error: empty iso3166data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 
@@ -130,6 +132,7 @@ func formatEmailData(data []models.EmailData) map[string][][]models.EmailData {
 		jsonOut, err := json.Marshal(mapOut)
 		if err != nil {
 			log.Println("Services - Email - formatEmailData:", err)
+			fmt.Println("----------------------------")
 			return nil
 		}
 		log.Println("Корректные данные Email сервиса (в JSON):")
