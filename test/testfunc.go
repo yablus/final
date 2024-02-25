@@ -6,11 +6,11 @@ import (
 
 	"github.com/yablus/final/internal/usecase/service/billing"
 	"github.com/yablus/final/internal/usecase/service/email"
+	"github.com/yablus/final/internal/usecase/service/incident"
 	"github.com/yablus/final/internal/usecase/service/mms"
 	"github.com/yablus/final/internal/usecase/service/sms"
 	"github.com/yablus/final/internal/usecase/service/support"
 	"github.com/yablus/final/internal/usecase/service/voice"
-	//"github.com/yablus/final/internal/usecase/service/incident"
 )
 
 // Тестирование web-сервиса
@@ -69,7 +69,6 @@ func GetDataFromSupport() []byte {
 	return jsonOut
 }
 
-/*
 func GetDataFromIncident() []byte {
 	jsonOut, err := json.Marshal(incident.GetIncidentData())
 	if err != nil {
@@ -78,4 +77,3 @@ func GetDataFromIncident() []byte {
 	}
 	return jsonOut
 }
-*/

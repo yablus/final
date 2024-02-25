@@ -82,8 +82,7 @@ func makeTestResponse() []byte {
 	//Incident
 	TestResponse += "\"incident\": "
 	if testIncident {
-		//TestResponse += string(GetDataFromIncident())
-		TestResponse += string(TestResponseIncident)
+		TestResponse += string(GetDataFromIncident())
 	} else {
 		TestResponse += string(TestResponseIncident)
 	}
