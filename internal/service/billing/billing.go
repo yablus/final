@@ -13,14 +13,13 @@ import (
 )
 
 const (
-	dataPath = config.DataPath
-	showData = config.ShowDataInLogs
+	dataPath      = config.DataPath
+	showFinalData = config.ShowFinalDataInLogs
 )
 
 var fileBillingDataName = config.FileBillingDataName
 
 func makeBillingData() models.BillingData {
-	fmt.Println("================")
 	log.Println("Запущен сервис Billing")
 
 	var fileBillingData = dataPath + fileBillingDataName
@@ -67,19 +66,19 @@ func makeBillingData() models.BillingData {
 		FraudControl:   dataBool[4],
 		CheckoutPage:   dataBool[5],
 	}
-	log.Printf("Данные Billing сервиса для web сформированы")
+	log.Printf("Данные Billing сервиса сформированы для api")
 
-	if showData {
+	if showFinalData {
 		jsonOut, err := json.Marshal(data)
 		if err != nil {
 			log.Println("Services - Billing:", err)
 			return models.BillingData{}
 		}
-		log.Println("Исправленные данные Billing сервиса (в JSON):")
-		fmt.Println("----------------")
+		log.Println("Данные Billing сервиса (в JSON):")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
 	}
+
+	fmt.Println("----------------------------")
 	return data
 
 }
@@ -87,9 +86,3 @@ func makeBillingData() models.BillingData {
 func GetBillingData() models.BillingData {
 	return makeBillingData()
 }
-
-/*
-func main() {
-	fmt.Println(makeBillingData())
-}
-*/

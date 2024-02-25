@@ -14,14 +14,14 @@ import (
 )
 
 const (
-	dataPath = config.DataPath
-	showData = config.ShowDataInLogs
+	dataPath      = config.DataPath
+	showData      = config.ShowDataInLogs
+	showFinalData = config.ShowFinalDataInLogs
 )
 
 var fileEmailDataName = config.FileEmailDataName
 
 func makeEmailData() []models.EmailData {
-	fmt.Println("================")
 	log.Println("Запущен сервис Email")
 
 	var fileEmailData = dataPath + fileEmailDataName
@@ -69,9 +69,8 @@ func makeEmailData() []models.EmailData {
 			return nil
 		}
 		log.Println("Исправленные данные Email сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
+		fmt.Println()
 	}
 
 	return data
@@ -126,20 +125,19 @@ func formatEmailData(data []models.EmailData) map[string][][]models.EmailData {
 		}
 		mapOut[k] = value(v)
 	}
-	log.Println("Данные Email сервиса обновлены и отсортированы")
+	log.Println("Данные Email сервиса подготовлены для api")
 
-	if showData {
+	if showFinalData {
 		jsonOut, err := json.Marshal(mapOut)
 		if err != nil {
 			log.Println("Services - Email - formatEmailData:", err)
 			return nil
 		}
 		log.Println("Корректные данные Email сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
 	}
 
+	fmt.Println("----------------------------")
 	return mapOut
 }
 

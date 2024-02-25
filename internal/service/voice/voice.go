@@ -14,14 +14,14 @@ import (
 )
 
 const (
-	dataPath = config.DataPath
-	showData = config.ShowDataInLogs
+	dataPath      = config.DataPath
+	showData      = config.ShowDataInLogs
+	showFinalData = config.ShowFinalDataInLogs
 )
 
 var fileVoiceDataName = config.FileVoiceDataName
 
 func makeVoiceData() []models.VoiceCallData {
-	fmt.Println("================")
 	log.Println("Запущен сервис VoiceCall")
 
 	var fileVoiceData = dataPath + fileVoiceDataName
@@ -89,9 +89,8 @@ func makeVoiceData() []models.VoiceCallData {
 			return nil
 		}
 		log.Println("Исправленные данные VoiceCall сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
+		fmt.Println()
 	}
 
 	return data
@@ -117,20 +116,19 @@ func formatVoiceData(data []models.VoiceCallData) []models.VoiceCallData {
 	sort.SliceStable(data, func(i, j int) bool {
 		return data[i].Country < data[j].Country
 	})
-	log.Println("Данные VoiceCall сервиса обновлены и отсортированы")
+	log.Println("Данные VoiceCall сервиса отсортированы и подготовлены для api")
 
-	if showData {
+	if showFinalData {
 		jsonOut, err := json.Marshal(data)
 		if err != nil {
 			log.Println("Services - VoiceCall - formatVoiceData:", err)
 			return nil
 		}
 		log.Println("Корректные данные VoiceCall сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
 	}
 
+	fmt.Println("----------------------------")
 	return data
 }
 

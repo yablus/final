@@ -1,9 +1,11 @@
 package config
 
 const (
-	FilesPath      = "files/"
-	DataPath       = "simulator/"
-	ShowDataInLogs = false
+	FilesPath           = "files/"
+	DataPath            = "simulator/"
+	ClearConsole        = false
+	ShowDataInLogs      = false
+	ShowFinalDataInLogs = false
 )
 
 var (

@@ -13,14 +13,14 @@ import (
 )
 
 const (
-	dataPath = config.DataPath
-	showData = config.ShowDataInLogs
+	dataPath      = config.DataPath
+	showData      = config.ShowDataInLogs
+	showFinalData = config.ShowFinalDataInLogs
 )
 
 var fileSMSDataName = config.FileSMSDataName
 
 func makeSMSData() []models.SMSData {
-	fmt.Println("================")
 	log.Println("Запущен сервис SMS")
 
 	var fileSMSData = dataPath + fileSMSDataName
@@ -64,9 +64,8 @@ func makeSMSData() []models.SMSData {
 			return nil
 		}
 		log.Println("Исправленные данные SMS сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
+		fmt.Println()
 	}
 
 	return data
@@ -100,20 +99,19 @@ func formatSMSData(data []models.SMSData) [][]models.SMSData {
 		return data[i].Country < data[j].Country
 	})
 	out = append(out, data)
-	log.Println("Данные SMS сервиса обновлены и отсортированы")
+	log.Println("Данные SMS сервиса отсортированы и подготовлены для api")
 
-	if showData {
+	if showFinalData {
 		jsonOut, err := json.Marshal(out)
 		if err != nil {
 			log.Println("Services - SMS - formatSMSData:", err)
 			return nil
 		}
 		log.Println("Корректные данные SMS сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
 	}
 
+	fmt.Println("----------------------------")
 	return out
 }
 

@@ -13,12 +13,14 @@ import (
 	"github.com/yablus/final/internal/models"
 )
 
-const showData = config.ShowDataInLogs
+const (
+	showData      = config.ShowDataInLogs
+	showFinalData = config.ShowFinalDataInLogs
+)
 
 var urlMMSData = config.URLMMSDataPath
 
 func makeMMSData() []models.MMSData {
-	fmt.Println("================")
 	log.Println("Запущен сервис MMS")
 
 	bufMMSData, status := functions.GetDataFromURL(urlMMSData)
@@ -62,9 +64,8 @@ func makeMMSData() []models.MMSData {
 			return nil
 		}
 		log.Println("Исправленные данные MMS сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
+		fmt.Println()
 	}
 
 	return data
@@ -98,20 +99,19 @@ func formatMMSData(data []models.MMSData) [][]models.MMSData {
 		return data[i].Country < data[j].Country
 	})
 	out = append(out, data)
-	log.Println("Данные MMS сервиса обновлены и отсортированы")
+	log.Println("Данные MMS сервиса отсортированы и подготовлены для api")
 
-	if showData {
+	if showFinalData {
 		jsonOut, err := json.Marshal(out)
 		if err != nil {
 			log.Println("Services - MMS - formatMMSData:", err)
 			return nil
 		}
 		log.Println("Корректные данные MMS сервиса (в JSON):")
-		fmt.Println("----------------")
 		fmt.Println(string(jsonOut))
-		fmt.Println("----------------")
 	}
 
+	fmt.Println("----------------------------")
 	return out
 }
 
