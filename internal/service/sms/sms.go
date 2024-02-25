@@ -73,11 +73,13 @@ func makeSMSData() []models.SMSData {
 func formatSMSData(data []models.SMSData) [][]models.SMSData {
 	if data == nil {
 		log.Println("Services - SMS - formatSMSData:", "Formatting error: empty data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 	iso3166data := functions.GetAllCountriesFromFile("iso3166-1_alpha-2.data")
 	if iso3166data == nil {
 		log.Println("Services - SMS - formatSMSData:", "Formatting error: empty iso3166data")
+		fmt.Println("----------------------------")
 		return nil
 	}
 	for i := 0; i < len(data); i++ {
@@ -104,6 +106,7 @@ func formatSMSData(data []models.SMSData) [][]models.SMSData {
 		jsonOut, err := json.Marshal(out)
 		if err != nil {
 			log.Println("Services - SMS - formatSMSData:", err)
+			fmt.Println("----------------------------")
 			return nil
 		}
 		log.Println("Корректные данные SMS сервиса (в JSON):")

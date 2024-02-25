@@ -108,6 +108,7 @@ func NewService() *Data {
 		//Email:    marshEmail(test.TestResponseEmail),
 		Billing: billing.GetBillingData(),
 		//Billing:  marshBil(test.TestResponseBilling),
+		//Support: nil, //[]int{},
 		Support:  marshS(test.TestResponseSupport),
 		Incident: marshIn(test.TestResponseIncident),
 	}
@@ -115,7 +116,6 @@ func NewService() *Data {
 
 func (u *Data) GetResultData() models.ResultT {
 	var result models.ResultT
-	//Проверить все поля
 	if u.SMS != nil && u.MMS != nil && u.Voice != nil && u.Email != nil && u.Support != nil && u.Incident != nil {
 		result.Status = true
 		result.Data = u.GetResultSetT()

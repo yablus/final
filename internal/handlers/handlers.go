@@ -61,7 +61,7 @@ func (h *ServiceHandler) GetEmailData(w http.ResponseWriter, r *http.Request) {
 		log.Println("Internal error")
 		return
 	}
-	log.Println("Данные map[string][][]models.EmailData переданы:")
+	log.Println("Данные map[string][][]EmailData переданы:")
 }
 
 func (h *ServiceHandler) GetBillingData(w http.ResponseWriter, r *http.Request) {
