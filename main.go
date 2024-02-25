@@ -12,7 +12,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/yablus/final/internal/handlers"
-	"github.com/yablus/final/internal/service"
+	"github.com/yablus/final/internal/usecase/service"
 )
 
 var clear map[string]func()

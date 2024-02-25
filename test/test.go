@@ -17,11 +17,11 @@ var (
 	// сервисы, которые надо тестировать, остальные будут подменены
 	testSMS       = true // Подменить все кроме SMS
 	testMMS       = true
-	testVoiceCall = false
-	testEmail     = false
-	testBilling   = false
-	testSupport   = false
-	testIncident  = false
+	testVoiceCall = true
+	testEmail     = true
+	testBilling   = true
+	testSupport   = true
+	testIncident  = true
 )
 
 func makeTestResponse() []byte {
@@ -42,8 +42,7 @@ func makeTestResponse() []byte {
 	//MMS
 	TestResponse += "\"mms\": "
 	if testMMS {
-		//TestResponse += string(sms.GetSMSDataJSON())
-		TestResponse += string(TestResponseMMS)
+		TestResponse += string(GetDataFromMMS())
 	} else {
 		TestResponse += string(TestResponseMMS)
 	}
@@ -51,8 +50,7 @@ func makeTestResponse() []byte {
 	//VoiceCall
 	TestResponse += "\"voice_call\": "
 	if testVoiceCall {
-		//TestResponse += string(sms.GetSMSDataJSON())
-		TestResponse += string(TestResponseVoiceCall)
+		TestResponse += string(GetDataFromVoice())
 	} else {
 		TestResponse += string(TestResponseVoiceCall)
 	}
@@ -60,8 +58,7 @@ func makeTestResponse() []byte {
 	//Email
 	TestResponse += "\"email\": "
 	if testEmail {
-		//TestResponse += string(sms.GetSMSDataJSON())
-		TestResponse += string(TestResponseEmail)
+		TestResponse += string(GetDataFromEmail())
 	} else {
 		TestResponse += string(TestResponseEmail)
 	}
@@ -69,8 +66,7 @@ func makeTestResponse() []byte {
 	//Billing
 	TestResponse += "\"billing\": "
 	if testBilling {
-		//TestResponse += string(sms.GetSMSDataJSON())
-		TestResponse += string(TestResponseBilling)
+		TestResponse += string(GetDataFromBilling())
 	} else {
 		TestResponse += string(TestResponseBilling)
 	}
@@ -78,8 +74,7 @@ func makeTestResponse() []byte {
 	//Support
 	TestResponse += "\"support\": "
 	if testSupport {
-		//TestResponse += string(sms.GetSMSDataJSON())
-		TestResponse += string(TestResponseSupport)
+		TestResponse += string(GetDataFromSupport())
 	} else {
 		TestResponse += string(TestResponseSupport)
 	}
@@ -87,7 +82,7 @@ func makeTestResponse() []byte {
 	//Incident
 	TestResponse += "\"incident\": "
 	if testIncident {
-		//TestResponse += string(sms.GetSMSDataJSON())
+		//TestResponse += string(GetDataFromIncident())
 		TestResponse += string(TestResponseIncident)
 	} else {
 		TestResponse += string(TestResponseIncident)

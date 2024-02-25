@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/yablus/final/internal/config"
 	"github.com/yablus/final/internal/models"
+	"github.com/yablus/final/internal/usecase/config"
 )
 
 var filesPath = config.S("p_filesPath")

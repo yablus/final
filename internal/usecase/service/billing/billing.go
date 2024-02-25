@@ -7,9 +7,9 @@ import (
 	"math"
 	"strings"
 
-	"github.com/yablus/final/internal/config"
-	"github.com/yablus/final/internal/functions"
 	"github.com/yablus/final/internal/models"
+	"github.com/yablus/final/internal/usecase/config"
+	"github.com/yablus/final/internal/usecase/functions"
 )
 
 var (

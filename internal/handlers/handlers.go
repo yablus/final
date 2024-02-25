@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/yablus/final/internal/service"
+	"github.com/yablus/final/internal/usecase/service"
 )
 
 type ServiceHandler struct {

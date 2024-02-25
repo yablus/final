@@ -5,12 +5,12 @@ import (
 	"log"
 
 	"github.com/yablus/final/internal/models"
-	"github.com/yablus/final/internal/service/billing"
-	"github.com/yablus/final/internal/service/email"
-	"github.com/yablus/final/internal/service/mms"
-	"github.com/yablus/final/internal/service/sms"
-	"github.com/yablus/final/internal/service/support"
-	"github.com/yablus/final/internal/service/voice"
+	"github.com/yablus/final/internal/usecase/service/billing"
+	"github.com/yablus/final/internal/usecase/service/email"
+	"github.com/yablus/final/internal/usecase/service/mms"
+	"github.com/yablus/final/internal/usecase/service/sms"
+	"github.com/yablus/final/internal/usecase/service/support"
+	"github.com/yablus/final/internal/usecase/service/voice"
 	"github.com/yablus/final/test"
 )
 
